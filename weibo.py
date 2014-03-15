@@ -1,6 +1,9 @@
 #!/usr/bin/env python2
 #!---coding:utf-8---
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait # available since 2.4.0
+from selenium.webdriver.support import expected_conditions as EC # available since 2.26.0
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -76,5 +79,3 @@ class Weibo(Base):
         image_upload_element = self.driver.find_element_by_class_name(image_upload_class)
         image_upload_element.click()
 
-    def close(self):
-        self.driver.quit()

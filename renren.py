@@ -2,6 +2,9 @@
 #!/usr/bin/env python2
 #!---coding:utf-8---
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait # available since 2.4.0
+from selenium.webdriver.support import expected_conditions as EC # available since 2.26.0
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -71,12 +74,31 @@ class Renren(Base):
     def post_with_pic(self, meg, pic):
 
         image_button_xpath = '''//*[@id="global-publisher-status"]/section/div/div/div[1]/dl/dd[2]'''
+        image_input_xpath = '''//*[@id="global-publisher-photo"]/section/div[1]/section[2]/div/input[1]'''
+        text_input_xpath = '''//*[@id="global-publisher-status"]/section/div/div/div[1]/div[1]/textarea'''
+        image_info_xpath = '''//*[@id="global-publisher-photo"]/section/div[3]/div'''
+        send_xpath = '''//*[@id="global-publisher-status"]/section/div/div/div[3]/div[1]/input'''
+
+        #meg
+        text_input_element = self.driver.find_element_by_xpath(text_input_xpath)
+        text_input_element.clear()
+        text_input_element.click()
+        text_input_element.send_keys("")
+        text_input_element.send_keys(meg)
+
+        #upload img
         image_button = self.driver.find_element_by_xpath(image_button_xpath)
         image_button.click()
-        image_input_xpath = '''//*[@id="global-publisher-photo"]/section/div[1]/section[2]/div/input[1]'''
         image_input = self.driver.find_element_by_xpath(image_input_xpath)
+        image_input.send_keys(pic)
 
-        image_input.send_keys("/home/junfeng7/virtualenvs/grwqfdt/grwqfdt/error.png")
+        send_element = self.driver.find_element_by_xpath(send_xpath)
 
-    def close(self):
-        self.driver.quit()
+        try:
+            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, image_info_xpath)))
+        except Exception:
+            logging.error("upload %s error. exceeded 10s" % pic)
+            return
+
+        send_element.click()
+

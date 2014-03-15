@@ -29,7 +29,6 @@ class WeiboCase(unittest.TestCase):
         meg = "refactor."+ str(time.time())
         self.weibo.login()
         self.weibo.post(meg)
-        self.weibo.quit()
 
     def _post_with_pic(self):
         meg = None
@@ -39,7 +38,7 @@ class WeiboCase(unittest.TestCase):
 
 
     def tearDown(self):
-        pass
+        self.driver.quit()
 
 class RenrenCase(unittest.TestCase):
 
@@ -53,16 +52,16 @@ class RenrenCase(unittest.TestCase):
         meg = str(time.time())
         self.renren.login()
         self.renren.post(meg)
-        self.renren.quit()
 
     def test_post_with_pic(self):
-        meg = None
-        pic = None
+        meg = "just post a picture." + str(time.time())
+        pic = "/home/junfeng7/archlinux.jpg"
         self.renren.login()
         self.renren.post_with_pic(meg, pic)
 
 
     def tearDown(self):
+        #self.driver.quit()
         pass
 
 if __name__ == '__main__':
