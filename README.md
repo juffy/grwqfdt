@@ -5,7 +5,7 @@ one click post to all social networks
 
 support
 =======
-* reibo
+* weibo
     * post message
 * renren
     * post message
