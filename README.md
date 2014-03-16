@@ -10,4 +10,6 @@ support
 * renren
     * post message
     * post message with only one picture.
+* qzone
+    * post message
 
