@@ -11,6 +11,9 @@ support
     * post message with only one picture.
 * qzone
     * post message
+* douban
+    * post message
+    * post message with one picture(haven't test).
 
 LICENSE
 =======

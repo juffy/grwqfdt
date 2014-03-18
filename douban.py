@@ -56,9 +56,12 @@ class Douban(Base):
 
     def post(self,meg):
         logging.warning(self.driver.current_url)
-        input_xpath = '''//*[@id="global-publisher-status"]/section/div/div/div[1]/div[1]/textarea'''
-        send_xpath = '''//*[@id="global-publisher-status"]/section/div/div/div[3]/div[1]/input'''
+        isay_div_xpath = '''//*[@id="db-isay"]'''
+        input_xpath = '''//*[@id="isay-cont"]'''
+        send_xpath = '''//*[@id="isay-submit"]'''
 
+        isay_div = self.driver.find_element_by_xpath(isay_div_xpath)
+        isay_div.click()
         input_element = self.driver.find_element_by_xpath(input_xpath)
         input_element.clear()
         input_element.click()
@@ -66,36 +69,41 @@ class Douban(Base):
         input_element.send_keys(meg)
 
 
-        send_element = self.driver.find_element_by_xpath(send_xpath)
+        try:
+            send_element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, send_xpath)))
+        except Exception, e:
+            print e
+            logging.info(input_element.get_attribute("class"))
+            logging.error("error when wait input_element visibility.")
+            return
         send_element.click()
 
 
     def post_with_pic(self, meg, pic):
 
-        image_button_xpath = '''//*[@id="global-publisher-status"]/section/div/div/div[1]/dl/dd[2]'''
-        image_input_xpath = '''//*[@id="global-publisher-photo"]/section/div[1]/section[2]/div/input[1]'''
-        text_input_xpath = '''//*[@id="global-publisher-status"]/section/div/div/div[1]/div[1]/textarea'''
-        image_info_xpath = '''//*[@id="global-publisher-photo"]/section/div[3]/div'''
-        send_xpath = '''//*[@id="global-publisher-status"]/section/div/div/div[3]/div[1]/input'''
+        image_button_xpath = ''''''
+        isay_div_xpath = '''//*[@id="db-isay"]'''
+        input_xpath = '''//*[@id="isay-cont"]'''
+        image_input_xpath = '''//*[@id="isay-upload-inp"]'''
+        send_xpath = '''//*[@id="isay-submit"]'''
 
-        #meg
-        text_input_element = self.driver.find_element_by_xpath(text_input_xpath)
-        text_input_element.clear()
-        text_input_element.click()
-        text_input_element.send_keys("")
-        text_input_element.send_keys(meg)
+        isay_div = self.driver.find_element_by_xpath(isay_div_xpath)
+        isay_div.click()
+        input_element = self.driver.find_element_by_xpath(input_xpath)
+        input_element.clear()
+        input_element.click()
+        input_element.send_keys("")
+        input_element.send_keys(meg)
 
-        #upload img
-        image_button = self.driver.find_element_by_xpath(image_button_xpath)
-        image_button.click()
         image_input = self.driver.find_element_by_xpath(image_input_xpath)
         image_input.send_keys(pic)
 
-        send_element = self.driver.find_element_by_xpath(send_xpath)
 
         try:
-            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, image_info_xpath)))
-        except Exception:
+            send_element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, send_xpath)))
+        except Exception, e:
+            print e
+            logging.info(input_element.get_attribute("class"))
             logging.error("upload %s error. exceeded 10s" % pic)
             return
 

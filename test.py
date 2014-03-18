@@ -19,7 +19,8 @@ from douban import Douban
 
 userinfo = get_config_info()
 
-message = "Fuck file extension"
+message = "just upload a picture"
+pic = '/home/junfeng7/archlinux.jpg'
 
 class WeiboCase(unittest.TestCase):
 
@@ -123,9 +124,8 @@ class DoubanCase(unittest.TestCase):
         self.douban.login()
         self.douban.post(meg)
 
-    def _post_with_pic(self):
-        meg = "just post a picture." + str(time.time())
-        pic = "/home/junfeng7/archlinux.jpg"
+    def test_post_with_pic(self):
+        meg = message
         self.douban.login()
         self.douban.post_with_pic(meg, pic)
 
