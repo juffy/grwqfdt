@@ -51,7 +51,8 @@ class Weibo(Base):
         submit_element = self.driver.find_element_by_xpath(submit_xpath)
         submit_element.click()
 
-        self.user["cookie"] = self.driver.get_cookies()
+        #TODO handle cookie
+        #self.user["cookie"] = self.driver.get_cookies()
         logging.debug(self.driver.current_url)
 
     def post(self,meg):

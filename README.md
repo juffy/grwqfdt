@@ -1,7 +1,6 @@
 grwqfdt
 =======
-
-one click post to all social networks
+a tool for post message to some networks. not using oauth
 
 support
 =======
@@ -13,3 +12,6 @@ support
 * qzone
     * post message
 
+LICENSE
+=======
+BSD
