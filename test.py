@@ -19,7 +19,7 @@ from douban import Douban
 
 userinfo = get_config_info()
 
-message = "just upload a picture"
+message = u"我不就多登陆了几次嘛，豆瓣你就开看验证码了，我可是都登陆成功了，也太不厚道了．"
 pic = '/home/junfeng7/archlinux.jpg'
 
 class WeiboCase(unittest.TestCase):

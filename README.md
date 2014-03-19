@@ -13,7 +13,7 @@ support
     * post message
 * douban
     * post message
-    * post message with one picture(haven't test).
+    * post message with one picture.
 
 LICENSE
 =======
