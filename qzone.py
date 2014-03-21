@@ -39,9 +39,11 @@ class Qzone(Base):
         self.driver.switch_to_frame("login_frame")
         username_element = self.driver.find_element_by_xpath(username_xpath)
 
+        username_element.clear()
         username_element.send_keys(self.user["username"])
 
         pass_element = self.driver.find_element_by_xpath(pass_xpath)
+        pass_element.clear()
         pass_element.send_keys(self.user["password"])
 
         submit_element = self.driver.find_element_by_xpath(submit_xpath)

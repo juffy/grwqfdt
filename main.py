@@ -73,7 +73,7 @@ def main():
     arg_parser = argparse.ArgumentParser(description="cli arguments")
     arg_parser.add_argument("-m",action="store", default=None, help="message you want to post")
     arg_parser.add_argument("-p",action="store", default=None, help="pic path you want to upload")
-    arg_parser.add_argument("-s",action="store", default=None,help="help")
+    arg_parser.add_argument("-s",action="store", default="wrqd",help="help")
     args = arg_parser.parse_args()
     if args.m:
         args.m = args.m.decode("utf-8")

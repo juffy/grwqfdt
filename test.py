@@ -16,7 +16,8 @@ from renren import Renren
 from qzone import Qzone
 from douban import Douban
 
-
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("user-data-dir=~/.config/chromium/Default")
 userinfo = get_config_info()
 
 message = u"我不就多登陆了几次嘛，豆瓣你就开看验证码了，我可是都登陆成功了，也太不厚道了．"
@@ -79,7 +80,7 @@ class RenrenCase(unittest.TestCase):
 class QzoneCase(unittest.TestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.driver.implicitly_wait(10)
         self.user = userinfo["qzone"]
         self.qzone = Qzone(self.user, self.driver)
