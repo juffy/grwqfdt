@@ -61,6 +61,7 @@ class Twitter(Base):
         post_button_xpath = '''//*[@id="global-new-tweet-button"]'''
         input_xpath = '''//*[@id="tweet-box-global"]'''
         send_xpath = '''//*[@id="global-tweet-dialog-dialog"]/div[2]/div[4]/form/div[2]/div[2]/button'''
+        first_li_xpath = '''//*[@id="stream-items-id"]/li[1]'''
 
 
         post_button = self.driver.find_element_by_xpath(post_button_xpath)
@@ -85,6 +86,16 @@ class Twitter(Base):
             logging.error("error when wait input_element visibility.")
             return
         send_element.click()
+        self._check_success(first_li_xpath, meg)
+
+    def _check_success(self, xpath, text):
+        try:
+            WebDriverWait(self.driver, 10).until(EC.text_to_be_present_in_element((By.XPATH, xpath), text))
+        except Exception, e:
+            print e
+            logging.debug("post message not appear on page, maybe post not successfully.")
+            return
+        logging.info(self.driver.find_element_by_xpath(xpath).text)
 
     def post_with_pic(self, meg, pic):
 
