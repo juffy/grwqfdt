@@ -14,6 +14,8 @@ support
 * douban
     * post message
     * post message with one picture.
+* twitter (need proxy if under GFW)
+    * post message
 
 LICENSE
 =======
