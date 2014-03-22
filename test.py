@@ -15,12 +15,14 @@ from weibo import Weibo
 from renren import Renren
 from qzone import Qzone
 from douban import Douban
+from twitter import Twitter
 
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("user-data-dir=~/.config/chromium/Default")
+chrome_options.add_argument("--user-data-dir=/home/junfeng7/.config/chromium/Default")
+chrome_options.add_argument("--proxy-server=http://127.0.0.1:8087")
 userinfo = get_config_info()
 
-message = u"我不就多登陆了几次嘛，豆瓣你就开看验证码了，我可是都登陆成功了，也太不厚道了．"
+message = u"just post a tweet."
 pic = '/home/junfeng7/archlinux.jpg'
 
 class WeiboCase(unittest.TestCase):
@@ -129,6 +131,33 @@ class DoubanCase(unittest.TestCase):
         meg = message
         self.douban.login()
         self.douban.post_with_pic(meg, pic)
+
+
+    def tearDown(self):
+        #self.driver.quit()
+        pass
+
+class TwitterCase(unittest.TestCase):
+    def setUp(self):
+        self.driver = webdriver.Chrome(chrome_options=chrome_options)
+        self.driver.implicitly_wait(10)
+        self.user = userinfo["twitter"]
+        self.twitter = Twitter(self.user, self.driver)
+    def test_proxy(self):
+        self.driver.get("https://twitter.com/junfeng_")
+
+    def test_login(self):
+        self.twitter.login()
+
+    def test_post(self):
+        meg = message
+        self.twitter.login()
+        self.twitter.post(meg)
+
+    def test_post_with_pic(self):
+        meg = message
+        self.twitter.login()
+        self.twitter.post_with_pic(meg, pic)
 
 
     def tearDown(self):
