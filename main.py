@@ -18,6 +18,8 @@ from twitter import Twitter
 
 logging.basicConfig(level="INFO")
 userinfo = get_config_info()
+import sys
+in_encode = sys.stdin.encoding
 
 
 c_dict = {'w':Weibo,
@@ -91,10 +93,10 @@ def main():
     arg_parser.add_argument("-s",action="store", default="wrqdt",help="help")
     args = arg_parser.parse_args()
     if args.m:
-        args.m = args.m.decode("utf-8")
+        args.m = args.m.decode(in_encode)
         logging.info(type(args.m))
         if args.p:
-            args.p = args.p.decode("utf-8")
+            args.p = args.p.decode(in_encode)
             proxy = Proxy(args.m, args.s)
             proxy.post_with_pic()
             proxy.quit()
