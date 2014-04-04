@@ -32,11 +32,15 @@ class Qzone(Base):
         self.driver.get(self.LOGIN_URL)
         logging.warning(self.driver.current_url)
 
+        switcher_plogin_xpath = '''//*[@id="switcher_plogin"]'''
         username_xpath = '''//*[@id="u"]'''
         pass_xpath = '''//*[@id="p"]'''
         submit_xpath = '''//*[@id="login_button"]'''
 
         self.driver.switch_to_frame("login_frame")
+        switcher_plogin = self.driver.find_element_by_xpath(switcher_plogin_xpath)
+        switcher_plogin.click()
+
         username_element = self.driver.find_element_by_xpath(username_xpath)
 
         username_element.clear()
