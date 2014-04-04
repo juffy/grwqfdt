@@ -36,7 +36,7 @@ class Weibo(Base):
         username_xpath = '''//*[@id="pl_login_form"]/div[1]/div/input'''
         pass_xpath = '''//*[@id="pl_login_form"]/div[2]/div/input'''
         savestate_xpath = '''//*[@id="login_form_savestate"]'''
-        submit_xpath = '''//*[@id="pl_login_form"]/div[6]/a'''
+        submit_xpath = '''//*[@id="pl_login_form"]/div[6]/div[1]/a'''
 
         username_element = self.driver.find_element_by_xpath(username_xpath)
 

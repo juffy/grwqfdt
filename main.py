@@ -14,20 +14,32 @@ from weibo import Weibo
 from renren import Renren
 from qzone import Qzone
 from douban import Douban
+from twitter import Twitter
 
 logging.basicConfig(level="INFO")
 userinfo = get_config_info()
 
+
 c_dict = {'w':Weibo,
         'r':Renren,
         'q':Qzone,
-        'd':Douban
+        'd':Douban,
+        't':Twitter
         }
 u_dict = {'w':'weibo',
         'r':'renren',
         'q':'qzone',
-        'd':'douban'
+        'd':'douban',
+        't':'twitter'
         }
+
+
+def proxy_driver():
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--user-data-dir=/home/junfeng7/.config/chromium/Default")
+    chrome_options.add_argument("--proxy-server=http://127.0.0.1:8087")
+    return webdriver.Chrome(chrome_options=chrome_options)
+
 class Proxy(object):
     def __init__(self, meg, sites, pic=None):
         self.meg = meg
@@ -42,7 +54,10 @@ class Proxy(object):
             logging.error("meg should't None, and length <= 140")
             return
         for c in self.sites:
-            instance = c_dict[c](userinfo[u_dict[c]], self.driver)
+            if c == "t":
+                instance = c_dict[c](userinfo[u_dict[c]], proxy_driver())
+            else:
+                instance = c_dict[c](userinfo[u_dict[c]], self.driver)
             instance.login()
             instance.post(self.meg)
             time.sleep(1)
@@ -57,7 +72,7 @@ class Proxy(object):
             instance.login()
             try:
                 instance.post(self.meg, self.pic)
-                time.sleep(1)
+                time.sleep(2)
             except Exception, e:
                 logging.error(e)
                 continue
@@ -73,7 +88,7 @@ def main():
     arg_parser = argparse.ArgumentParser(description="cli arguments")
     arg_parser.add_argument("-m",action="store", default=None, help="message you want to post")
     arg_parser.add_argument("-p",action="store", default=None, help="pic path you want to upload")
-    arg_parser.add_argument("-s",action="store", default="wrqd",help="help")
+    arg_parser.add_argument("-s",action="store", default="wrqdt",help="help")
     args = arg_parser.parse_args()
     if args.m:
         args.m = args.m.decode("utf-8")
