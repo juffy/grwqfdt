@@ -30,7 +30,10 @@ class Renren(Base):
             logging.debug(self.driver.current_url)
             return
         self.driver.get(self.LOGIN_URL)
-        logging.warning(self.driver.current_url)
+        if self.driver.current_url != self.LOGIN_URL:
+            logging.info(self.driver.get_cookies())
+            logging.info("already logined.")
+            return
 
         username_xpath = '''//*[@id="email"]'''
         pass_xpath = '''//*[@id="password"]'''
@@ -64,9 +67,16 @@ class Renren(Base):
         input_element.click()
         input_element.send_keys("")
         input_element.send_keys(meg)
+        input_element.click()
 
 
-        send_element = self.driver.find_element_by_xpath(send_xpath)
+        try:
+            send_element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, send_xpath)))
+        except Exception, e:
+            print e
+            logging.info(input_element.get_attribute("class"))
+            logging.error("error when wait input_element visibility.")
+            return
         send_element.click()
 
 

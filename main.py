@@ -36,9 +36,9 @@ u_dict = {'w':'weibo',
         }
 
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--user-data-dir=/home/junfeng7/.config/chromium/Default")
 def proxy_driver():
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--user-data-dir=/home/junfeng7/.config/chromium/Default")
     chrome_options.add_argument("--proxy-server=http://127.0.0.1:8087")
     return webdriver.Chrome(chrome_options=chrome_options)
 
@@ -47,7 +47,7 @@ class Proxy(object):
         self.meg = meg
         self.pic = pic
         self.sites = sites
-        self.driver = webdriver.Chrome(chrome_options=chrome_options)
+        self.driver = webdriver.Chrome()
         self.driver.implicitly_wait(10)
 
 

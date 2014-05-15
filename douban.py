@@ -31,7 +31,7 @@ class Douban(Base):
             self.driver.get(self.LOGIN_URL)
             logging.debug(self.driver.current_url)
             return
-        self.driver.get(self.MINE_URL)
+        self.driver.get(self.LOGIN_URL)
         logging.warning(self.driver.current_url)
         if (not self.driver.current_url.startswith("http://www.douban.com/accounts/login")):
             return

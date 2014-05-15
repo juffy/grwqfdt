@@ -30,9 +30,11 @@ class Weibo(Base):
             self.driver.get(self.LOGIN_URL)
             logging.debug(self.driver.current_url)
             return
-        print self.LOGIN_URL
         self.driver.get(self.LOGIN_URL)
-        print self.driver.current_url
+        if self.driver.current_url != self.LOGIN_URL:
+            logging.info(self.driver.get_cookies())
+            logging.info("already logined.")
+            return
 
         username_xpath = '''//*[@id="pl_login_form"]/div[1]/div/input'''
         pass_xpath = '''//*[@id="pl_login_form"]/div[2]/div/input'''
