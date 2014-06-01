@@ -16,6 +16,7 @@ from renren import Renren
 from qzone import Qzone
 from douban import Douban
 from twitter import Twitter
+from google import Google
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--user-data-dir=/home/junfeng7/.config/chromium/Default")
@@ -137,14 +138,12 @@ class DoubanCase(unittest.TestCase):
         #self.driver.quit()
         pass
 
-class TwitterCase(unittest.TestCase):
+class GoogleCase(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.driver.implicitly_wait(10)
-        self.user = userinfo["twitter"]
-        self.twitter = Twitter(self.user, self.driver)
-    def test_proxy(self):
-        self.driver.get("https://twitter.com/junfeng_")
+        self.user = userinfo["google"]
+        self.twitter = Google(self.user, self.driver)
 
     def test_login(self):
         self.twitter.login()

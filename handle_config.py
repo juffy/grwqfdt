@@ -5,7 +5,7 @@ import os.path
 import ConfigParser
 CONFIG_FILE = "userinfo.cfg"
 
-sections = ["google+", "renren", "weibo", "qzone", "facebook",
+sections = ["google", "renren", "weibo", "qzone", "facebook",
         "douban", "twitter"]
 options = ["username", "password", "cookie"]
 
