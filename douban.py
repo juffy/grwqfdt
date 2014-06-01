@@ -15,6 +15,8 @@ from base import Base, initPhantomjs
 
 class Douban(Base):
 
+    MINE_URL = "http://www.douban.com/mine/"
+    INDEX_URL = "http://www.douban.com"
     LOGIN_URL = "http://www.douban.com/accounts/login"
 
     def __init__(self, user, driver):
@@ -31,7 +33,8 @@ class Douban(Base):
             return
         self.driver.get(self.LOGIN_URL)
         logging.warning(self.driver.current_url)
-
+        if (not self.driver.current_url.startswith("http://www.douban.com/accounts/login")):
+            return
         username_xpath = '''//*[@id="email"]'''
         pass_xpath = '''//*[@id="password"]'''
         savestate_xpath = '''//*[@id="remember"]'''
@@ -55,6 +58,7 @@ class Douban(Base):
         #self.user["cookie"] = self.driver.get_cookies()
 
     def post(self,meg):
+        self.driver.get(self.INDEX_URL)
         logging.warning(self.driver.current_url)
         isay_div_xpath = '''//*[@id="db-isay"]'''
         input_xpath = '''//*[@id="isay-cont"]'''

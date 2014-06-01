@@ -15,6 +15,7 @@ from base import Base, initPhantomjs
 
 class Weibo(Base):
 
+    INDEX_URL = "http://weibo.com"
     LOGIN_URL = "http://weibo.com/login.php"
 
     def __init__(self, user, driver):
@@ -29,9 +30,11 @@ class Weibo(Base):
             self.driver.get(self.LOGIN_URL)
             logging.debug(self.driver.current_url)
             return
-        print self.LOGIN_URL
         self.driver.get(self.LOGIN_URL)
-        print self.driver.current_url
+        if self.driver.current_url != self.LOGIN_URL:
+            logging.info(self.driver.get_cookies())
+            logging.info("already logined.")
+            return
 
         username_xpath = '''//*[@id="pl_login_form"]/div[1]/div/input'''
         pass_xpath = '''//*[@id="pl_login_form"]/div[2]/div/input'''
@@ -56,6 +59,7 @@ class Weibo(Base):
         logging.debug(self.driver.current_url)
 
     def post(self,meg):
+        self.driver.get(self.INDEX_URL)
         input_xpath = '''//*[@id="pl_content_publisherTop"]/div/div[2]/textarea'''
         send_xpath = '''//*[@id="pl_content_publisherTop"]/div/div[3]/div[1]/a'''
         input_element = self.driver.find_element_by_xpath(input_xpath)

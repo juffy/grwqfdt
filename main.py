@@ -57,6 +57,7 @@ class Proxy(object):
             return
         for c in self.sites:
             if c == "t":
+                self.driver.quit()
                 instance = c_dict[c](userinfo[u_dict[c]], proxy_driver())
             else:
                 instance = c_dict[c](userinfo[u_dict[c]], self.driver)
